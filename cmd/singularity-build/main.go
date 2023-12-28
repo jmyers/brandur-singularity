@@ -10,12 +10,12 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/brandur/singularity"
-	"github.com/brandur/singularity/assets"
-	"github.com/brandur/singularity/markdown"
-	"github.com/brandur/singularity/pool"
-	"github.com/brandur/singularity/templatehelpers"
-	"github.com/brandur/singularity/toc"
+	singularity "github.com/jmyers/brandur-singularity"
+	"github.com/jmyers/brandur-singularity/assets"
+	"github.com/jmyers/brandur-singularity/markdown"
+	"github.com/jmyers/brandur-singularity/pool"
+	"github.com/jmyers/brandur-singularity/templatehelpers"
+	"github.com/jmyers/brandur-singularity/toc"
 	"github.com/joeshaw/envdecode"
 	"github.com/yosssi/ace"
 )

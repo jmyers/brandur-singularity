@@ -20,4 +20,4 @@ The scripts can also be tested locally with Node's lambda-local package:
 
     npm install -g jslint
     npm install -g lambda-local
-    REPOSITORY=brandur/singularity TRAVIS_TOKEN= make
+    REPOSITORY=jmyers/brandur-singularity TRAVIS_TOKEN= make
