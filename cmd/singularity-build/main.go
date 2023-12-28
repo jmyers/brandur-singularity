@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -55,7 +54,7 @@ var conf Conf
 func main() {
 	start := time.Now()
 	defer func() {
-		log.Infof("Built site in %v.", time.Now().Sub(start))
+		log.Infof("Built site in %v.", time.Since(start))
 	}()
 
 	err := envdecode.Decode(&conf)
@@ -119,7 +118,7 @@ func main() {
 func linkFonts() error {
 	start := time.Now()
 	defer func() {
-		log.Debugf("Linked font assets in %v.", time.Now().Sub(start))
+		log.Debugf("Linked font assets in %v.", time.Since(start))
 	}()
 
 	source, err := filepath.Abs(path.Join(singularity.ContentDir, "fonts"))
@@ -138,10 +137,10 @@ func linkFonts() error {
 func linkImages() error {
 	start := time.Now()
 	defer func() {
-		log.Debugf("Linked image assets in %v.", time.Now().Sub(start))
+		log.Debugf("Linked image assets in %v.", time.Since(start))
 	}()
 
-	assets, err := ioutil.ReadDir(singularity.ContentDir + "/images")
+	assets, err := os.ReadDir(singularity.ContentDir + "/images")
 	if err != nil {
 		return err
 	}
@@ -173,7 +172,7 @@ func compileArticle(articleFile string) error {
 	log.Debugf("Rendering article: %v", name)
 
 	source, err :=
-		ioutil.ReadFile(path.Join(singularity.ContentDir, "articles", articleFile))
+		os.ReadFile(path.Join(singularity.ContentDir, "articles", articleFile))
 	if err != nil {
 		return err
 	}
@@ -214,7 +213,7 @@ func compileArticle(articleFile string) error {
 //
 
 func tasksForArticles() ([]*pool.Task, error) {
-	files, err := ioutil.ReadDir(path.Join(singularity.ContentDir, "articles"))
+	files, err := os.ReadDir(path.Join(singularity.ContentDir, "articles"))
 	if err != nil {
 		return nil, err
 	}

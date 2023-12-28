@@ -98,7 +98,7 @@ func buildTree(headers []*header) *html.Node {
 		if needNewListNode {
 			listItemNode = &html.Node{Data: "li", Type: html.ElementNode}
 			listNode.AppendChild(listItemNode)
-			needNewListNode = false
+			needNewListNode = false //nolint:ineffassign
 		}
 
 		contentNode := &html.Node{Data: header.title, Type: html.TextNode}
