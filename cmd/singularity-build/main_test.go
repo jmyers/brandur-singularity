@@ -7,8 +7,8 @@ import (
 	"path"
 	"testing"
 
-	"github.com/brandur/singularity"
-	"github.com/brandur/singularity/pool"
+	singularity "github.com/jmyers/brandur-singularity"
+	"github.com/jmyers/brandur-singularity/pool"
 	assert "github.com/stretchr/testify/require"
 )
 

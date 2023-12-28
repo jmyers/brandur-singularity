@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	log "github.com/Sirupsen/logrus"
-	"github.com/brandur/singularity"
+	singularity "github.com/jmyers/brandur-singularity"
 	"github.com/joeshaw/envdecode"
 )
 

@@ -5,3 +5,5 @@ public/
 public-dev/
 singularity
 tags
+singularity-serve
+singularity-build

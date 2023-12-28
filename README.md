@@ -1,6 +1,6 @@
 # Singularity
 
-[![Travis status](https://travis-ci.org/brandur/singularity.svg?branch=master)](https://travis-ci.org/brandur/singularity)
+[![Travis status](https://travis-ci.org/jmyers/brandur-singularity.svg?branch=master)](https://travis-ci.org/jmyers/brandur-singularity)
 
 A demonstration of a very simple static site generator that deploys to S3
 through Travis CI.
