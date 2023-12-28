@@ -69,7 +69,7 @@ install:
 	go install ./...
 
 lint:
-	$(GOPATH)/bin/golint -set_exit_status
+	/opt/homebrew/bin/golangci-lint run
 
 serve:
 	$(GOPATH)/bin/singularity-serve
