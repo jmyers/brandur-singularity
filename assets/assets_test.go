@@ -1,14 +1,14 @@
 package assets
 
 import (
-	"io/ioutil"
+	"os"
 	"testing"
 
 	assert "github.com/stretchr/testify/require"
 )
 
 func TestCompileJavascripts(t *testing.T) {
-	dir, err := ioutil.TempDir("", "javascripts")
+	dir, _ := os.MkdirTemp("", "javascripts")
 
 	file0 := dir + "/.hidden"
 	file1 := dir + "/file1.js"
@@ -16,23 +16,25 @@ func TestCompileJavascripts(t *testing.T) {
 	file3 := dir + "/file3.js"
 	out := dir + "/app.js"
 
+	var err error
+
 	// This file is hidden and doesn't show up in output.
-	err = ioutil.WriteFile(file0, []byte(`hidden`), 0755)
+	err = os.WriteFile(file0, []byte(`hidden`), 0755)
 	assert.NoError(t, err)
 
-	err = ioutil.WriteFile(file1, []byte(`function() { return "file1" }`), 0755)
+	err = os.WriteFile(file1, []byte(`function() { return "file1" }`), 0755)
 	assert.NoError(t, err)
 
-	err = ioutil.WriteFile(file2, []byte(`function() { return "file2" }`), 0755)
+	err = os.WriteFile(file2, []byte(`function() { return "file2" }`), 0755)
 	assert.NoError(t, err)
 
-	err = ioutil.WriteFile(file3, []byte(`function() { return "file3" }`), 0755)
+	err = os.WriteFile(file3, []byte(`function() { return "file3" }`), 0755)
 	assert.NoError(t, err)
 
 	err = CompileJavascripts(dir, out)
 	assert.NoError(t, err)
 
-	actual, err := ioutil.ReadFile(out)
+	actual, err := os.ReadFile(out)
 	assert.NoError(t, err)
 
 	expected := `/* file1.js */
@@ -64,7 +66,7 @@ function() { return "file3" }
 }
 
 func TestCompileStylesheets(t *testing.T) {
-	dir, err := ioutil.TempDir("", "stylesheets")
+	dir, _ := os.MkdirTemp("", "stylesheets")
 
 	file0 := dir + "/.hidden"
 	file1 := dir + "/file1.sass"
@@ -72,25 +74,27 @@ func TestCompileStylesheets(t *testing.T) {
 	file3 := dir + "/file3.css"
 	out := dir + "/app.css"
 
+	var err error
+
 	// This file is hidden and doesn't show up in output.
-	err = ioutil.WriteFile(file0, []byte("hidden"), 0755)
+	err = os.WriteFile(file0, []byte("hidden"), 0755)
 	assert.NoError(t, err)
 
 	// The syntax of the first and second files is GCSS and the third is in
 	// CSS.
-	err = ioutil.WriteFile(file1, []byte("p\n  margin: 10px"), 0755)
+	err = os.WriteFile(file1, []byte("p\n  margin: 10px"), 0755)
 	assert.NoError(t, err)
 
-	err = ioutil.WriteFile(file2, []byte("p\n  padding: 10px"), 0755)
+	err = os.WriteFile(file2, []byte("p\n  padding: 10px"), 0755)
 	assert.NoError(t, err)
 
-	err = ioutil.WriteFile(file3, []byte("p {\n  border: 10px;\n}"), 0755)
+	err = os.WriteFile(file3, []byte("p {\n  border: 10px;\n}"), 0755)
 	assert.NoError(t, err)
 
 	err = CompileStylesheets(dir, out)
 	assert.NoError(t, err)
 
-	actual, err := ioutil.ReadFile(out)
+	actual, err := os.ReadFile(out)
 	assert.NoError(t, err)
 
 	// Note that the first two files have no spacing in the output because they

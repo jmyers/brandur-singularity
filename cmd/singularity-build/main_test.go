@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 	"testing"
@@ -13,11 +12,11 @@ import (
 )
 
 func TestEnsureSymlink(t *testing.T) {
-	dir, err := ioutil.TempDir("", "symlink")
+	dir, err := os.MkdirTemp("", "symlink")
 	assert.NoError(t, err)
 
 	source := path.Join(dir, "source")
-	err = ioutil.WriteFile(source, []byte("source"), 0755)
+	err = os.WriteFile(source, []byte("source"), 0755)
 	assert.NoError(t, err)
 
 	dest := path.Join(dir, "symlink-dest")
@@ -29,7 +28,7 @@ func TestEnsureSymlink(t *testing.T) {
 	err = ensureSymlink(source, dest)
 	assert.NoError(t, err)
 
-	actual, err := os.Readlink(dest)
+	actual, _ := os.Readlink(dest)
 	assert.Equal(t, source, actual)
 
 	//
@@ -41,7 +40,7 @@ func TestEnsureSymlink(t *testing.T) {
 	err = ensureSymlink(source, dest)
 	assert.NoError(t, err)
 
-	actual, err = os.Readlink(dest)
+	actual, _ = os.Readlink(dest)
 	assert.Equal(t, source, actual)
 
 	//
@@ -52,13 +51,13 @@ func TestEnsureSymlink(t *testing.T) {
 	assert.NoError(t, err)
 
 	source = path.Join(dir, "source")
-	err = ioutil.WriteFile(source, []byte("source"), 0755)
+	err = os.WriteFile(source, []byte("source"), 0755)
 	assert.NoError(t, err)
 
 	err = ensureSymlink(source, dest)
 	assert.NoError(t, err)
 
-	actual, err = os.Readlink(dest)
+	actual, _ = os.Readlink(dest)
 	assert.Equal(t, source, actual)
 }
 

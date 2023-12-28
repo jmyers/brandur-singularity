@@ -42,7 +42,7 @@ var outputDirs = []string{
 func CreateOutputDirs(targetDir string) error {
 	start := time.Now()
 	defer func() {
-		log.Debugf("Created target directories in %v.", time.Now().Sub(start))
+		log.Debugf("Created target directories in %v.", time.Since(start))
 	}()
 
 	for _, dir := range outputDirs {

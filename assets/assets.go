@@ -3,7 +3,6 @@ package assets
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"path"
 	"strings"
@@ -21,12 +20,12 @@ import (
 func CompileJavascripts(inPath, outPath string) error {
 	start := time.Now()
 	defer func() {
-		log.Debugf("Compiled script assets in %v.", time.Now().Sub(start))
+		log.Debugf("Compiled script assets in %v.", time.Since(start))
 	}()
 
 	log.Debugf("Building: %v", outPath)
 
-	javascriptInfos, err := ioutil.ReadDir(inPath)
+	javascriptInfos, err := os.ReadDir(inPath)
 	if err != nil {
 		return err
 	}
@@ -49,16 +48,16 @@ func CompileJavascripts(inPath, outPath string) error {
 			return err
 		}
 
-		outFile.WriteString("/* " + javascriptInfo.Name() + " */\n\n")
-		outFile.WriteString("(function() {\n\n")
+		_, _ = outFile.WriteString("/* " + javascriptInfo.Name() + " */\n\n")
+		_, _ = outFile.WriteString("(function() {\n\n")
 
 		_, err = io.Copy(outFile, inFile)
 		if err != nil {
 			return err
 		}
 
-		outFile.WriteString("\n\n")
-		outFile.WriteString("}).call(this);\n\n")
+		_, _ = outFile.WriteString("\n\n")
+		_, _ = outFile.WriteString("}).call(this);\n\n")
 	}
 
 	return nil
@@ -75,12 +74,12 @@ func CompileJavascripts(inPath, outPath string) error {
 func CompileStylesheets(inPath, outPath string) error {
 	start := time.Now()
 	defer func() {
-		log.Debugf("Compiled stylesheet assets in %v.", time.Now().Sub(start))
+		log.Debugf("Compiled stylesheet assets in %v.", time.Since(start))
 	}()
 
 	log.Debugf("Building: %v", outPath)
 
-	stylesheetInfos, err := ioutil.ReadDir(inPath)
+	stylesheetInfos, err := os.ReadDir(inPath)
 	if err != nil {
 		return err
 	}
@@ -103,7 +102,7 @@ func CompileStylesheets(inPath, outPath string) error {
 			return err
 		}
 
-		outFile.WriteString("/* " + stylesheetInfo.Name() + " */\n\n")
+		_, _ = outFile.WriteString("/* " + stylesheetInfo.Name() + " */\n\n")
 
 		if strings.HasSuffix(stylesheetInfo.Name(), ".sass") {
 			_, err := gcss.Compile(outFile, inFile)
@@ -118,7 +117,7 @@ func CompileStylesheets(inPath, outPath string) error {
 			}
 		}
 
-		outFile.WriteString("\n\n")
+		_, _ = outFile.WriteString("\n\n")
 	}
 
 	return nil
